@@ -16,8 +16,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
   late TextEditingController apellidoController;
   late TextEditingController edadController;
   late TextEditingController profesionController;
+  late TextEditingController correoController;
+  late TextEditingController contrasenaController;
 
   void registrar() async {
+    String correo = correoController.text;
+    String contrasena = contrasenaController.text;
     String nombre = nombreController.text;
     String apellidos = apellidoController.text;
     int edad = int.parse(edadController.text);
@@ -30,6 +34,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
     apellidoController = TextEditingController(text: '');
     edadController = TextEditingController(text: '');
     profesionController = TextEditingController(text: '');
+    correoController = TextEditingController(text: '');
+    contrasenaController = TextEditingController(text: '');
     super.initState();
   }
 
@@ -58,6 +64,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   controller: apellidoController,
                   decoration: const InputDecoration(
                     labelText: 'Apellidos',
+                  ),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: correoController,
+                  decoration: const InputDecoration(
+                    labelText: 'Correo Electrónico',
+                  ),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: contrasenaController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Contraseña',
                   ),
                 ),
                 const SizedBox(height: 10),
