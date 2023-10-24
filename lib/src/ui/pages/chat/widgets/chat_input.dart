@@ -1,7 +1,24 @@
 import 'package:flutter/material.dart';
 
-class ChatInput extends StatelessWidget {
+class ChatInput extends StatefulWidget {
   const ChatInput({super.key});
+
+  @override
+  State<ChatInput> createState() => _ChatInputState();
+}
+
+class _ChatInputState extends State<ChatInput> {
+  late TextEditingController mensajeController;
+
+  void enviar() async {
+    String mensaje = mensajeController.text;
+  }
+
+  @override
+  void initState() {
+    mensajeController = TextEditingController(text: '');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +31,10 @@ class ChatInput extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Expanded(
+          Expanded(
             child: TextField(
-              decoration: InputDecoration(
+              controller: mensajeController,
+              decoration: const InputDecoration(
                 hintText: 'Escribe un mensaje...',
                 border: InputBorder.none,
               ),

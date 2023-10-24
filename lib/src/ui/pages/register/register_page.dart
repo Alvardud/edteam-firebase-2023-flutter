@@ -3,9 +3,35 @@ import 'package:flutter/material.dart';
 GlobalKey<ScaffoldMessengerState> registerKey =
     GlobalKey<ScaffoldMessengerState>();
 
-class RegistrationPage extends StatelessWidget {
+class RegistrationPage extends StatefulWidget {
   static const route = 'register_page';
   const RegistrationPage({super.key});
+
+  @override
+  State<RegistrationPage> createState() => _RegistrationPageState();
+}
+
+class _RegistrationPageState extends State<RegistrationPage> {
+  late TextEditingController nombreController;
+  late TextEditingController apellidoController;
+  late TextEditingController edadController;
+  late TextEditingController profesionController;
+
+  void registrar() async {
+    String nombre = nombreController.text;
+    String apellidos = apellidoController.text;
+    int edad = int.parse(edadController.text);
+    String profesion = profesionController.text;
+  }
+
+  @override
+  void initState() {
+    nombreController = TextEditingController(text: '');
+    apellidoController = TextEditingController(text: '');
+    edadController = TextEditingController(text: '');
+    profesionController = TextEditingController(text: '');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,27 +47,31 @@ class RegistrationPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  controller: nombreController,
+                  decoration: const InputDecoration(
                     labelText: 'Nombres',
                   ),
                 ),
                 const SizedBox(height: 10),
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  controller: apellidoController,
+                  decoration: const InputDecoration(
                     labelText: 'Apellidos',
                   ),
                 ),
                 const SizedBox(height: 10),
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  controller: edadController,
+                  decoration: const InputDecoration(
                     labelText: 'Edad',
                   ),
                   keyboardType: TextInputType.number,
                 ),
                 const SizedBox(height: 10),
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  controller: profesionController,
+                  decoration: const InputDecoration(
                     labelText: 'Profesión',
                   ),
                 ),

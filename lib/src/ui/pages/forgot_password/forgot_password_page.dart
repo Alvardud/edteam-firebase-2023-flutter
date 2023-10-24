@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
 
-class ForgotPasswordPage extends StatelessWidget {
+class ForgotPasswordPage extends StatefulWidget {
   static const route = 'forgot_password_page';
   const ForgotPasswordPage({super.key});
+
+  @override
+  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
+}
+
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  late TextEditingController correoController;
+
+  void enviar() async {
+    String correo = correoController.text;
+  }
+
+  @override
+  void initState() {
+    correoController = TextEditingController(text: '');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +38,9 @@ class ForgotPasswordPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                controller: correoController,
+                decoration: const InputDecoration(
                   labelText: 'Correo Electrónico',
                 ),
               ),

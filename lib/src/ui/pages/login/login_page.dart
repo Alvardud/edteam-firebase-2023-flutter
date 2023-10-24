@@ -6,9 +6,30 @@ import 'package:flutter/material.dart';
 GlobalKey<ScaffoldMessengerState> loginKey =
     GlobalKey<ScaffoldMessengerState>();
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   static const route = 'login_page';
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  late TextEditingController correoController;
+
+  late TextEditingController contrasenaController;
+
+  void iniciarSesion() async {
+    String correo = correoController.text;
+    String contrasena = contrasenaController.text;
+  }
+
+  @override
+  void initState() {
+    correoController = TextEditingController(text: '');
+    contrasenaController = TextEditingController(text: '');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +43,21 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Padding(
-                padding: EdgeInsets.all(20.0),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
                 child: TextField(
-                  decoration: InputDecoration(
+                  controller: correoController,
+                  decoration: const InputDecoration(
                     labelText: 'Correo Electrónico',
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(20.0),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
                 child: TextField(
+                  controller: contrasenaController,
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Contraseña',
                   ),
                 ),
