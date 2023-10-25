@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_2023_edteam/src/core/models/usuario.dart';
 import 'package:firebase_2023_edteam/src/ui/pages/chat/chat_page.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +17,8 @@ class ChatListPage extends StatefulWidget {
 }
 
 class _ChatListPageState extends State<ChatListPage> {
+  final firestore = FirebaseFirestore.instance;
+
   List<String> chats = [
     'Chat 1',
     'Chat 2',
@@ -60,20 +66,32 @@ class _ChatListPageState extends State<ChatListPage> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: filteredChats.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ChatPage())),
-                    title: Text(filteredChats[index]),
-                    // Aquí puedes agregar la navegación al chat seleccionado
+                child: FutureBuilder(
+              future: firestore.collection('usuarios').get(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  final usuarios_firebase = snapshot.data!.docs as List;
+                  return ListView.builder(
+                    itemCount: usuarios_firebase.length,
+                    itemBuilder: (context, index) {
+                      log(usuarios_firebase[index].data().toString());
+                      final Usuario usuario = Usuario.fromSnapshot(
+                          usuarios_firebase[index].data(), usuarios_firebase[index].id);
+                      return ListTile(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChatPage(usuarios_firebase[index].id))),
+                        title: Text(usuario.nombre ?? ''),
+                        // Aquí puedes agregar la navegación al chat seleccionado
+                      );
+                    },
                   );
-                },
-              ),
-            ),
+                } else {
+                  return SizedBox();
+                }
+              },
+            )),
           ],
         ),
       ),

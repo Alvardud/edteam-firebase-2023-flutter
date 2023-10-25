@@ -1,3 +1,5 @@
+import 'package:firebase_2023_edteam/src/core/models/usuario.dart';
+import 'package:firebase_2023_edteam/src/core/service/auth.dart';
 import 'package:flutter/material.dart';
 
 GlobalKey<ScaffoldMessengerState> registerKey =
@@ -19,6 +21,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   late TextEditingController correoController;
   late TextEditingController contrasenaController;
 
+  final auth = Auth();
+
   void registrar() async {
     String correo = correoController.text;
     String contrasena = contrasenaController.text;
@@ -26,6 +30,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
     String apellidos = apellidoController.text;
     int edad = int.parse(edadController.text);
     String profesion = profesionController.text;
+
+    auth.register(
+        Usuario('',
+            nombre: nombre,
+            apellidos: apellidos,
+            edad: edad,
+            profesion: profesion),
+        correo,
+        contrasena);
   }
 
   @override
@@ -50,60 +63,60 @@ class _RegistrationPageState extends State<RegistrationPage> {
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextField(
-                  controller: nombreController,
-                  decoration: const InputDecoration(
-                    labelText: 'Nombres',
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextField(
+                    controller: nombreController,
+                    decoration: const InputDecoration(
+                      labelText: 'Nombres',
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: apellidoController,
-                  decoration: const InputDecoration(
-                    labelText: 'Apellidos',
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: apellidoController,
+                    decoration: const InputDecoration(
+                      labelText: 'Apellidos',
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: correoController,
-                  decoration: const InputDecoration(
-                    labelText: 'Correo Electrónico',
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: correoController,
+                    decoration: const InputDecoration(
+                      labelText: 'Correo Electrónico',
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: contrasenaController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Contraseña',
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: contrasenaController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Contraseña',
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: edadController,
-                  decoration: const InputDecoration(
-                    labelText: 'Edad',
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: edadController,
+                    decoration: const InputDecoration(
+                      labelText: 'Edad',
+                    ),
+                    keyboardType: TextInputType.number,
                   ),
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: profesionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Profesión',
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: profesionController,
+                    decoration: const InputDecoration(
+                      labelText: 'Profesión',
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    // Aquí puedes agregar la lógica para registrar al usuario
-                  },
-                  child: const Text('Registrar'),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: registrar,
+                    child: const Text('Registrar'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

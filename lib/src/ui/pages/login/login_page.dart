@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_2023_edteam/src/core/service/auth.dart';
 import 'package:firebase_2023_edteam/src/ui/pages/chats/chats_page.dart';
 import 'package:firebase_2023_edteam/src/ui/pages/forgot_password/forgot_password_page.dart';
 import 'package:firebase_2023_edteam/src/ui/pages/register/register_page.dart';
@@ -16,12 +19,17 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   late TextEditingController correoController;
-
   late TextEditingController contrasenaController;
+
+  final auth = Auth();
 
   void iniciarSesion() async {
     String correo = correoController.text;
     String contrasena = contrasenaController.text;
+    final response = await auth.login(correo, contrasena);
+    if (response) {
+      Navigator.pushNamed(context, ChatListPage.route);
+    }
   }
 
   @override
@@ -71,10 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text('Registrarme'),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      // Aquí puedes agregar la lógica para iniciar sesión
-                      Navigator.pushNamed(context, ChatListPage.route);
-                    },
+                    onPressed: iniciarSesion,
                     child: const Text('Iniciar Sesión'),
                   ),
                 ],

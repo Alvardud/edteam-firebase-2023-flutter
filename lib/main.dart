@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         RegistrationPage.route: (context) => const RegistrationPage(),
         ForgotPasswordPage.route: (context) => const ForgotPasswordPage(),
         ChatListPage.route: (context) => const ChatListPage(),
-        ChatPage.route: (context)=> const ChatPage()
+        ChatPage.route: (context)=> const ChatPage('')
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

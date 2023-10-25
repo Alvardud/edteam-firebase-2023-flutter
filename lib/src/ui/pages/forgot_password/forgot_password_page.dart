@@ -1,3 +1,4 @@
+import 'package:firebase_2023_edteam/src/core/service/auth.dart';
 import 'package:flutter/material.dart';
 
 GlobalKey<ScaffoldMessengerState> rememberKey =
@@ -14,8 +15,11 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   late TextEditingController correoController;
 
+  final auth = Auth();
+
   void enviar() async {
     String correo = correoController.text;
+    auth.rememberPassword(correo);
   }
 
   @override
@@ -51,9 +55,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {
-                    // Aquí puedes agregar la lógica para enviar un correo de restablecimiento de contraseña
-                  },
+                  onPressed: enviar,
                   child: const Text('Enviar Correo de Restablecimiento'),
                 ),
               ],
